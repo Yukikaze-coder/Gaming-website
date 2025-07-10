@@ -161,6 +161,7 @@ This project is open source and available under the [MIT License](LICENSE).
 - **Animations**: Framer Motion
 - **Styling**: Tailwind CSS
 - **Build Tool**: Vite
+- **Echoes.mp3**: Morandini Luigi  All Right Reserved
 
 ## 🚀 Future Enhancements
 
