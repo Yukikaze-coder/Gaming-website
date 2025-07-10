@@ -1,5 +1,5 @@
 import "boxicons/css/boxicons.min.css";
-import { TbFileCv } from "react-icons/tb";
+//import { TbFileCv } from "react-icons/tb";
 
 const Footer = () => {
   return (
