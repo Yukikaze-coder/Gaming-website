@@ -21,7 +21,7 @@ const Arena = () => {
 
                 {/* Card background  */}
                 <div className="absolute h-full w-full">
-                    <img src="public/images/bento-card1.png" alt="" />
+                    <img src="/images/bento-card1.png" alt="" />
 
                     <button className="absolute bottom-0 h-16 w-full bg-black bg-opacity-70 text-2xl font-bold hover:text-yellow-400 transition-all duration-300 text-nowrap">
                         <i className="bx bx-store-alt"></i> NFT STORE
@@ -33,7 +33,7 @@ const Arena = () => {
                 <div className="relative overflow-hidden rounded-3xl border border-white aspect-[4.4/4] transform transition-transform duration-300 hover:scale-105">
 
                     <video className="w-full h-full object-cover" autoPlay loop muted playsInline>
-                        <source src="public/videos/bento-card2.mp4" type="video/mp4" />
+                        <source src="/videos/bento-card2.mp4" type="video/mp4" />
                         Your browser does not support the video tag.
                     </video>
                 </div>
@@ -47,7 +47,7 @@ const Arena = () => {
                     {/* Card 3 */}
                     <div className="relative overflow-hidden rounded-3xl border border-white aspect-square transform transition-transform duration-300 hover:scale-105">
                         <video className="w-full h-full object-cover" autoPlay loop muted playsInline>
-                            <source src="public/videos/bento-card3.mp4" type="video/mp4" />
+                            <source src="/videos/bento-card3.mp4" type="video/mp4" />
                             Your browser does not support the video tag.
                         </video>
                         <h1 className="absolute bottom-2 left-1/2 transform -translate-x-1/2 z-10 font-extrabold text-2xl">
@@ -58,7 +58,7 @@ const Arena = () => {
                      {/* Card 4 */}
                     <div className="relative overflow-hidden rounded-3xl border border-white aspect-square transform transition-transform duration-300 hover:scale-105">
                         <video className="w-full h-full object-cover" autoPlay loop muted playsInline>
-                            <source src="public/videos/bento-card4.mp4" type="video/mp4" />
+                            <source src="/videos/bento-card4.mp4" type="video/mp4" />
                             Your browser does not support the video tag.
                         </video>
                         <h1 className="absolute bottom-2 left-1/2 transform -translate-x-1/2 z-10 font-extrabold text-2xl">
@@ -69,7 +69,7 @@ const Arena = () => {
                     {/* Card 5 */}
                     <div className="relative overflow-hidden rounded-3xl border border-white aspect-square transform transition-transform duration-300 hover:scale-105">
                         <video className="w-full h-full object-cover" autoPlay loop muted playsInline>
-                            <source src="public\videos\bento-card5.mp4" type="video/mp4" />
+                            <source src="/videos/bento-card5.mp4" type="video/mp4" />
                             Your browser does not support the video tag.
                         </video>
                         <h1 className="absolute bottom-2 left-1/2 transform -translate-x-1/2 z-10 font-extrabold text-2xl">
@@ -80,10 +80,10 @@ const Arena = () => {
                 </div>
                 {/* Card 6 - bottom */}
                 <div className="relative overflow-hidden rounded-3xl border border-white aspect-[16/9] md:col-span-2 transform transition-transform duration-300 hover:scale-[1.02]">
-                    <img src="public\images\bento-card5.png" alt="card-6" />
+                    <img src="/images/bento-card5.png" alt="card-6" />
 
                     <button className="absolute bottom-0 h-16 w-full bg-black bg-opacity-70 text-2xl font-bold hover:text-yellow-400 transition-all duration-300 text-nowrap">
-                        <i class="bx bx-link-external"></i> Buy Now
+                        <i className="bx bx-link-external"></i> Buy Now
                     </button>
                 </div>
             </div>
