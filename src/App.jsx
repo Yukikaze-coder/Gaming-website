@@ -12,6 +12,9 @@ const App = () => {
   useEffect(() => {
     const startAudio = () => {
       if (!audioStarted && audioRef.current) {
+        // Set volume before playing (mobile Safari requirement)
+        audioRef.current.volume = 0.3;
+        
         audioRef.current.play().catch(error => {
           console.log('Audio play failed:', error);
         });
@@ -20,18 +23,21 @@ const App = () => {
         document.removeEventListener('click', startAudio);
         document.removeEventListener('touchstart', startAudio);
         document.removeEventListener('keydown', startAudio);
+        document.removeEventListener('touchend', startAudio);
       }
     };
 
-    // Add event listeners for user interaction
+    // Add event listeners for user interaction (including mobile events)
     document.addEventListener('click', startAudio);
     document.addEventListener('touchstart', startAudio);
+    document.addEventListener('touchend', startAudio);
     document.addEventListener('keydown', startAudio);
 
     return () => {
       // Cleanup event listeners
       document.removeEventListener('click', startAudio);
       document.removeEventListener('touchstart', startAudio);
+      document.removeEventListener('touchend', startAudio);
       document.removeEventListener('keydown', startAudio);
     };
   }, [audioStarted]);
@@ -43,7 +49,8 @@ const App = () => {
         ref={audioRef}
         loop
         preload="auto"
-        volume={0.3}
+        playsInline
+        muted={false}
       >
         <source src="/audio/Echoes.mp3" type="audio/mpeg" />
         Your browser does not support the audio element.

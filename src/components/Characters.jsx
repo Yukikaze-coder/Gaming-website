@@ -6,18 +6,36 @@ import Spline from '@splinetool/react-spline';
 
 function CustomCursor({ isHovering3D }) {
     const [position, setPosition] = useState({ x: 0, y: 0})
+    const [isMobile, setIsMobile] = useState(false)
     const cursorRef = useRef(null)
 
     useEffect(() => {
+        // Check if device is mobile
+        const checkMobile = () => {
+            setIsMobile(window.innerWidth <= 768 || 'ontouchstart' in window);
+        };
+        
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+
         const handleMouseMove = (e) => {
-            setPosition({ x: e.clientX, y: e.clientY });
+            if (!isMobile) {
+                setPosition({ x: e.clientX, y: e.clientY });
+            }
         };
 
-        document.addEventListener('mousemove', handleMouseMove)
+        if (!isMobile) {
+            document.addEventListener('mousemove', handleMouseMove);
+        }
+        
         return () => {
             document.removeEventListener('mousemove', handleMouseMove);
+            window.removeEventListener('resize', checkMobile);
         }
-    }, [])
+    }, [isMobile]);
+
+    // Don't render cursor on mobile
+    if (isMobile) return null;
 
     return (
         <motion.div
@@ -60,11 +78,26 @@ const Characters = () => {
 
 const [selectedAvatar, setSelectedAvatar] = useState("VIKI");
 const [cursorInModelArea, setCursorInModelArea] = useState(false);
+const [isMobile, setIsMobile] = useState(false);
 
 // Debug logging
 useEffect(() => {
     console.log("Selected avatar changed to:", selectedAvatar);
 }, [selectedAvatar]);
+
+// Check for mobile device
+useEffect(() => {
+    const checkMobile = () => {
+        setIsMobile(window.innerWidth <= 768 || 'ontouchstart' in window);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    return () => {
+        window.removeEventListener('resize', checkMobile);
+    };
+}, []);
 
 const Avatar = {
     VIKI: {
@@ -266,9 +299,9 @@ const handle3DAreaMouseLeave = () => {
     </div>
 
     {/* Right side 3D model */}
-    <div className="relative md:w-2/4 w-full md:h-full h-80 flex items-center justify-between overflow-hidden"
-         onMouseEnter={handle3DAreaMouseEnter}
-         onMouseLeave={handle3DAreaMouseLeave}
+    <div className={`relative md:w-2/4 w-full md:h-full h-80 flex items-center justify-between overflow-hidden ${isMobile ? '' : 'cursor-none'}`}
+         onMouseEnter={!isMobile ? handle3DAreaMouseEnter : undefined}
+         onMouseLeave={!isMobile ? handle3DAreaMouseLeave : undefined}
     >
 
     <AnimatePresence mode="wait">
