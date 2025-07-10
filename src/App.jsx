@@ -10,36 +10,58 @@ const App = () => {
   const [audioStarted, setAudioStarted] = useState(false);
 
   useEffect(() => {
-    const startAudio = () => {
+    const startAudio = async (e) => {
+      console.log('User interaction detected:', e.type);
+      
       if (!audioStarted && audioRef.current) {
-        // Set volume before playing (mobile Safari requirement)
-        audioRef.current.volume = 0.3;
-        
-        audioRef.current.play().catch(error => {
+        try {
+          // Reset audio to beginning
+          audioRef.current.currentTime = 0;
+          audioRef.current.volume = 0.3;
+          
+          // For mobile, we need to ensure the audio is ready
+          await audioRef.current.play();
+          
+          console.log('Audio started successfully');
+          setAudioStarted(true);
+          
+          // Remove all event listeners after success
+          removeAllListeners();
+        } catch (error) {
           console.log('Audio play failed:', error);
-        });
-        setAudioStarted(true);
-        // Remove event listener after first interaction
-        document.removeEventListener('click', startAudio);
-        document.removeEventListener('touchstart', startAudio);
-        document.removeEventListener('keydown', startAudio);
-        document.removeEventListener('touchend', startAudio);
+          // Try again with a slight delay for mobile
+          setTimeout(async () => {
+            try {
+              await audioRef.current.play();
+              setAudioStarted(true);
+              removeAllListeners();
+            } catch (retryError) {
+              console.log('Audio retry failed:', retryError);
+            }
+          }, 100);
+        }
       }
     };
 
-    // Add event listeners for user interaction (including mobile events)
-    document.addEventListener('click', startAudio);
-    document.addEventListener('touchstart', startAudio);
-    document.addEventListener('touchend', startAudio);
-    document.addEventListener('keydown', startAudio);
-
-    return () => {
-      // Cleanup event listeners
-      document.removeEventListener('click', startAudio);
-      document.removeEventListener('touchstart', startAudio);
-      document.removeEventListener('touchend', startAudio);
-      document.removeEventListener('keydown', startAudio);
+    const removeAllListeners = () => {
+      document.removeEventListener('click', startAudio, { passive: false });
+      document.removeEventListener('touchstart', startAudio, { passive: false });
+      document.removeEventListener('touchend', startAudio, { passive: false });
+      document.removeEventListener('keydown', startAudio, { passive: false });
+      document.removeEventListener('pointerdown', startAudio, { passive: false });
     };
+
+    // Only add listeners if audio hasn't started
+    if (!audioStarted) {
+      // Add event listeners with passive: false for better mobile support
+      document.addEventListener('click', startAudio, { passive: false });
+      document.addEventListener('touchstart', startAudio, { passive: false });
+      document.addEventListener('touchend', startAudio, { passive: false });
+      document.addEventListener('keydown', startAudio, { passive: false });
+      document.addEventListener('pointerdown', startAudio, { passive: false });
+    }
+
+    return removeAllListeners;
   }, [audioStarted]);
 
   return (
@@ -48,9 +70,10 @@ const App = () => {
       <audio 
         ref={audioRef}
         loop
-        preload="auto"
+        preload="metadata"
         playsInline
-        muted={false}
+        webkit-playsinline="true"
+        x5-playsinline="true"
       >
         <source src="/audio/Echoes.mp3" type="audio/mpeg" />
         Your browser does not support the audio element.
