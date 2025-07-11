@@ -141,7 +141,7 @@ The website uses a violet/purple theme with glassmorphism effects. Main colors:
 
 ## 🌐 Live Demo
 
-Visit the live website: [https://https://gaming-website-cqgx.onrender.com/](https://https://gaming-website-cqgx.onrender.com/)
+Visit the live website: [https://gaming-website-cqgx.onrender.com/](https://gaming-website-cqgx.onrender.com/)
 
 ## 👨‍💻 Developer
 
